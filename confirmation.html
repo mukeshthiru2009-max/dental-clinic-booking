@@ -22,19 +22,8 @@
 
     <main>
         <section class="confirmation-section">
-            <div class="confirmation-box">
-                <div class="confirmation-icon success">&#10003;</div>
-                <h1>Booking Request Received!</h1>
-                <p>Thank you for your appointment request.</p>
-                <p>We have received your booking details and will confirm your appointment shortly via email.</p>
-                <div class="booking-details">
-                    <p><strong>What happens next?</strong></p>
-                    <p>1. Our team will check availability for your preferred time slot</p>
-                    <p>2. You'll receive a confirmation email with your booking details</p>
-                    <p>3. A calendar invite will be sent once confirmed</p>
-                </div>
-                <p>If you need to make changes, please contact us at mukeshthiru2009@gmail.com</p>
-                <a href="index.html" class="btn-primary">Back to Home</a>
+            <div id="confirmation-content">
+                <!-- Content loaded by JavaScript -->
             </div>
         </section>
     </main>
@@ -45,5 +34,77 @@
             <p>Contact: mukeshthiru2009@gmail.com</p>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            const status = params.get('status');
+            const contentDiv = document.getElementById('confirmation-content');
+            
+            if (status === 'success') {
+                const name = params.get('name') || 'Guest';
+                const service = params.get('service') || 'Dental Service';
+                const date = params.get('date');
+                const time = params.get('time');
+                const email = params.get('email');
+                
+                // Format date for display
+                let formattedDate = date;
+                if (date) {
+                    const dateObj = new Date(date + 'T00:00:00');
+                    formattedDate = dateObj.toLocaleDateString('en-US', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                }
+                
+                // Format time for display
+                let formattedTime = time;
+                if (time) {
+                    const [hours, minutes] = time.split(':');
+                    const hour = parseInt(hours);
+                    const ampm = hour >= 12 ? 'PM' : 'AM';
+                    const displayHour = hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour);
+                    formattedTime = displayHour + ':' + minutes + ' ' + ampm;
+                }
+                
+                contentDiv.innerHTML = `
+                    <div class="confirmation-box">
+                        <div class="confirmation-icon success">&#10003;</div>
+                        <h1>Booking Request Received!</h1>
+                        <p>Thank you, ${name}. Your appointment request has been submitted.</p>
+                        <p>A confirmation email will be sent to <strong>${email || 'your email'}</strong></p>
+                        
+                        <div class="booking-details">
+                            <p><strong>Service:</strong> ${service}</p>
+                            <p><strong>Preferred Date:</strong> ${formattedDate}</p>
+                            <p><strong>Preferred Time:</strong> ${formattedTime}</p>
+                        </div>
+                        
+                        <div class="booking-details">
+                            <p><strong>What happens next?</strong></p>
+                            <p>1. Our team will check availability for your preferred slot</p>
+                            <p>2. You'll receive a confirmation email with booking details</p>
+                            <p>3. A calendar invite will be sent once confirmed</p>
+                        </div>
+                        
+                        <p>If you need to make changes, please contact us at mukeshthiru2009@gmail.com</p>
+                        <a href="index.html" class="btn-primary">Back to Home</a>
+                    </div>
+                `;
+            } else {
+                contentDiv.innerHTML = `
+                    <div class="confirmation-box">
+                        <div class="confirmation-icon error">&#10007;</div>
+                        <h1>Something Went Wrong</h1>
+                        <p>We couldn't process your booking request. Please try again.</p>
+                        <a href="booking.html" class="btn-primary">Try Again</a>
+                    </div>
+                `;
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - Bright Smile Dental</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <span class="logo-icon">ð¦·</span>
+                <span class="logo-text">Bright Smile Dental</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="booking.html" class="active">Book Appointment</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="booking-section">
+            <h1>Book Your Appointment</h1>
+            <p class="booking-intro">Fill out the form below to schedule your dental appointment. We'll confirm your booking via email.</p>
+            
+            <form name="appointment-booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/confirmation.html?status=success" class="booking-form">
+                <input type="hidden" name="form-name" value="appointment-booking">
+                <p style="display:none">
+                    <label>Don't fill this out if you're human: <input name="bot-field"></label>
+                </p>
+                
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <div class="phone-input-group">
+                        <select id="country-code" name="countryCode" required>
+                            <option value="+1">+1 (US/CA)</option>
+                            <option value="+44">+44 (UK)</option>
+                            <option value="+91" selected>+91 (India)</option>
+                            <option value="+61">+61 (Australia)</option>
+                            <option value="+65">+65 (Singapore)</option>
+                            <option value="+971">+971 (UAE)</option>
+                            <option value="+966">+966 (Saudi)</option>
+                            <option value="+49">+49 (Germany)</option>
+                            <option value="+33">+33 (France)</option>
+                            <option value="+81">+81 (Japan)</option>
+                        </select>
+                        <input type="tel" id="phone" name="phone" required 
+                               placeholder="Enter phone number" 
+                               pattern="[0-9]{6,15}"
+                               title="Please enter a valid phone number (6-15 digits)">
+                    </div>
+                    <small class="form-hint">We may use this for appointment reminders</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="service">Service Required *</label>
+                    <select id="service" name="service" required>
+                        <option value="">Select a service</option>
+                        <option value="Teeth Cleaning">Teeth Cleaning</option>
+                        <option value="Filling">Filling</option>
+                        <option value="Root Canal">Root Canal</option>
+                        <option value="Extraction">Extraction</option>
+                        <option value="Checkup">Checkup</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Preferred Date *</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time">Preferred Time *</label>
+                        <select id="time" name="time" required>
+                            <option value="">Select a time</option>
+                            <option value="09:00">09:00 AM</option>
+                            <option value="09:30">09:30 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="10:30">10:30 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="11:30">11:30 AM</option>
+                            <option value="12:00">12:00 PM</option>
+                            <option value="14:00">02:00 PM</option>
+                            <option value="14:30">02:30 PM</option>
+                            <option value="15:00">03:00 PM</option>
+                            <option value="15:30">03:30 PM</option>
+                            <option value="16:00">04:00 PM</option>
+                            <option value="16:30">04:30 PM</option>
+                            <option value="17:00">05:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary btn-submit">
+                    <span class="btn-text">Book Appointment</span>
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Bright Smile Dental Clinic. All rights reserved.</p>
+            <p>Contact: mukeshthiru2009@gmail.com</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set minimum date to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.getElementById('date');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.setAttribute('min', today);
+            
+            // Set max date to 3 months from now
+            const maxDate = new Date();
+            maxDate.setMonth(maxDate.getMonth() + 3);
+            dateInput.setAttribute('max', maxDate.toISOString().split('T')[0]);
+        });
+    </script>
+</body>
+</html>
